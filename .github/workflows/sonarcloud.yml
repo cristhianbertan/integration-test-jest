@@ -13,26 +13,30 @@ jobs:
     name: Run Integration Tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6.0.2
-    - name: Use Node.js 21
-      uses: actions/setup-node@v6.3.0
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: 22
         cache: 'npm'
-    - run: npm install      
-    - run: npm test
+
+    - run: npm ci
+    - run: npx jest --config ./jest.config.js
 
   sonarcloud:
     name: Run SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  
+
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v4
         with:
           node-version: 22 
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v7.0.0    
         env:
